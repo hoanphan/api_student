@@ -1,6 +1,138 @@
 [
   {
     "type": "get",
+    "url": "/scores/list",
+    "title": "1. Danh sách  điểm",
+    "group": "Scores",
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "/api/scores/list"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Mã học sinh</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>Mã kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Nội dung kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mảng chứa đối tượng</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data.items",
+            "description": "<p>Mảng động theo loại điểm</p>"
+          }
+        ]
+      }
+    },
+    "filename": "modules/api/controllers/ScoresController.php",
+    "groupTitle": "Scores",
+    "name": "GetScoresList"
+  },
+  {
+    "type": "get",
+    "url": "/semester/list",
+    "title": "1. Danh sách Học kỳ",
+    "group": "Semester",
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "/api/semester/list"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>Mã kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Nội dung kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mảng chứa đối</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data.items",
+            "description": "<p>Mảng chứa đối tượng học kỳ</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.items.id",
+            "description": "<p>Khóa chính</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.items.name",
+            "description": "<p>Tên học kỳ</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.items.current",
+            "description": "<p>Kỳ hiện tại</p>"
+          }
+        ]
+      }
+    },
+    "filename": "modules/api/controllers/SemesterController.php",
+    "groupTitle": "Semester",
+    "name": "GetSemesterList"
+  },
+  {
+    "type": "get",
     "url": "/student/list",
     "title": "1. Danh sách học sinh",
     "group": "Student",
@@ -47,6 +179,27 @@
             "optional": false,
             "field": "data.name",
             "description": "<p>Tên học sinh</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.email",
+            "description": "<p>Email</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.phone",
+            "description": "<p>Số điện thoại</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.birthday",
+            "description": "<p>Ngày sinh</p>"
           }
         ]
       }
@@ -54,5 +207,463 @@
     "filename": "modules/api/controllers/StudentController.php",
     "groupTitle": "Student",
     "name": "GetStudentList"
+  },
+  {
+    "type": "post",
+    "url": "/student/create",
+    "title": "2. Thêm mới học sinh",
+    "group": "Student",
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "/api/student/create"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Họ và tên của học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email của học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "sex",
+            "description": "<p>{1: nam, 0: nữ}giới tính của học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>Số điện thoại của  học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Ngày sinh của học sinh</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>Mã kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Nội dung kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mảng chứa đối tượng học sinh</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>Khóa chính</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>Tên học sinh</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.email",
+            "description": "<p>Email</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.phone",
+            "description": "<p>Số điện thoại</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.birthday",
+            "description": "<p>Ngày sinh</p>"
+          }
+        ]
+      }
+    },
+    "filename": "modules/api/controllers/StudentController.php",
+    "groupTitle": "Student",
+    "name": "PostStudentCreate"
+  },
+  {
+    "type": "post",
+    "url": "/student/delete",
+    "title": "5. Xóa học sinh",
+    "group": "Student",
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "/api/student/delete"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Mã học sinh</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>Mã kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Nội dung kết quả trả về</p>"
+          }
+        ]
+      }
+    },
+    "filename": "modules/api/controllers/StudentController.php",
+    "groupTitle": "Student",
+    "name": "PostStudentDelete"
+  },
+  {
+    "type": "post",
+    "url": "/student/get",
+    "title": "3. Lấy thông tin học sinh",
+    "group": "Student",
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "/api/student/get"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Mã học sinh</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>Mã kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Nội dung kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mảng chứa đối tượng học sinh</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>Khóa chính</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>Tên học sinh</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.email",
+            "description": "<p>Email</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.phone",
+            "description": "<p>Số điện thoại</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.birthday",
+            "description": "<p>Ngày sinh</p>"
+          }
+        ]
+      }
+    },
+    "filename": "modules/api/controllers/StudentController.php",
+    "groupTitle": "Student",
+    "name": "PostStudentGet"
+  },
+  {
+    "type": "post",
+    "url": "/student/update",
+    "title": "4. Cập nhật mới học sinh",
+    "group": "Student",
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "/api/student/update"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>mã học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Họ và tên của học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email của học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "sex",
+            "description": "<p>{1: nam, 0: nữ}giới tính của học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>Số điện thoại của  học sinh</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Ngày sinh của học sinh</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>Mã kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Nội dung kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mảng chứa đối tượng học sinh</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>Khóa chính</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>Tên học sinh</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.email",
+            "description": "<p>Email</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.phone",
+            "description": "<p>Số điện thoại</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.birthday",
+            "description": "<p>Ngày sinh</p>"
+          }
+        ]
+      }
+    },
+    "filename": "modules/api/controllers/StudentController.php",
+    "groupTitle": "Student",
+    "name": "PostStudentUpdate"
+  },
+  {
+    "type": "get",
+    "url": "/type-scores/list",
+    "title": "1. Danh sách loại điểm",
+    "group": "TypeScores",
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "/api/type-scores/list"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>Mã kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Nội dung kết quả trả về</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mảng chứa đối tượng</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data.items",
+            "description": "<p>Mảng chứa đối tượng loại điểm</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.items.id",
+            "description": "<p>Khóa chính</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.items.name",
+            "description": "<p>Tên Loại điểm</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.items.display",
+            "description": "<p>Hiển thị</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.items.count",
+            "description": "<p>Số lượng</p>"
+          }
+        ]
+      }
+    },
+    "filename": "modules/api/controllers/TypeScoresController.php",
+    "groupTitle": "TypeScores",
+    "name": "GetTypeScoresList"
   }
 ]

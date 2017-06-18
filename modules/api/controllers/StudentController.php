@@ -37,6 +37,9 @@ class StudentController extends ApiController
      * @apiSuccess {Object[]} data Mảng chứa đối tượng học sinh
      * @apiSuccess {number} data.id Khóa chính
      * @apiSuccess {string} data.name Tên học sinh
+     *  @apiSuccess {string} data.email Email
+     * @apiSuccess {string} data.phone Số điện thoại
+     *  @apiSuccess {number} data.birthday Ngày sinh
      */
     public function actionList()
     {
@@ -48,6 +51,9 @@ class StudentController extends ApiController
                 $response['data'][] = [
                     'id' => $student->id,
                     'name' =>$student->name,
+                    'email'=>$student->email,
+                    'phone'=>$student->phone,
+                    'birthday'=>$student->birthday
                 ];
             }
         } else {
@@ -55,6 +61,144 @@ class StudentController extends ApiController
         }
         $this->response(200, $response);
     }
+    /**
+     * @api              {post} /student/create 2. Thêm mới học sinh
+     * @apiGroup         Student
+     * @apiVersion       1.0.0
+     *
+     * @apiSampleRequest /api/student/create
+     * @apiParam {string} name Họ và tên của học sinh
+     * @apiParam {string} email Email của học sinh
+     * @apiParam {number} sex {1: nam, 0: nữ}giới tính của học sinh
+     * @apiParam {string} phone Số điện thoại của  học sinh
+     * @apiParam {string} birthday Ngày sinh của học sinh
+     *
+     * @apiSuccess {number} code Mã kết quả trả về
+     * @apiSuccess {string} message Nội dung kết quả trả về
+     * @apiSuccess {Object[]} data Mảng chứa đối tượng học sinh
+     * @apiSuccess {number} data.id Khóa chính
+     * @apiSuccess {string} data.name Tên học sinh
+     *  @apiSuccess {string} data.email Email
+     * @apiSuccess {string} data.phone Số điện thoại
+     *  @apiSuccess {number} data.birthday Ngày sinh
+     */
+    public function actionCreate()
+    {
+        $student                   = new Student();
+        $student->name          = $this->getBodyValue('name', true);
+        $student->phone    = $this->getBodyValue('phone', true);
+        $student->sex= $this->getBodyValue('sex', true);
+        $student->email   = $this->getBodyValue('email', false);
+        $student->birthday   = $this->getBodyValue('birthday', true);
+        $response['code'] = 0;
+        if ($student->save()) {
+            $data = $student->attributes;
+            $response['data']   = $data;
+        } else {
+            $response['code']    = 2;
+            $response['message'] = array_values($student->firstErrors)[0];
+            $response['data']    = $student->firstErrors;
+        }
+        $this->response(200, $response);
+    }
+    /**
+     * @api              {post} /student/update 4. Cập nhật mới học sinh
+     * @apiGroup         Student
+     * @apiVersion       1.0.0
+     *
+     * @apiSampleRequest /api/student/update
+     * @apiParam {number} id mã học sinh
+     * @apiParam {string} name Họ và tên của học sinh
+     * @apiParam {string} email Email của học sinh
+     * @apiParam {number} sex {1: nam, 0: nữ}giới tính của học sinh
+     * @apiParam {string} phone Số điện thoại của  học sinh
+     * @apiParam {string} birthday Ngày sinh của học sinh
+     *
+     * @apiSuccess {number} code Mã kết quả trả về
+     * @apiSuccess {string} message Nội dung kết quả trả về
+     * @apiSuccess {Object[]} data Mảng chứa đối tượng học sinh
+     * @apiSuccess {number} data.id Khóa chính
+     * @apiSuccess {string} data.name Tên học sinh
+     *  @apiSuccess {string} data.email Email
+     * @apiSuccess {string} data.phone Số điện thoại
+     *  @apiSuccess {number} data.birthday Ngày sinh
+     */
+    public function actionUpdate()
+    {
+        $id          = $this->getBodyValue('id', true);
+        $student                   = Student::findOne($id);
+        $student->name          = $this->getBodyValue('name', true);
+        $student->phone    = $this->getBodyValue('phone', true);
+        $student->sex= $this->getBodyValue('sex', true);
+        $student->email   = $this->getBodyValue('email', false);
+        $student->birthday   = $this->getBodyValue('birthday', true);
+        $response['code'] = 0;
+        if ($student->update()) {
+            $data = $student->attributes;
+            $response['data']   = $data;
+        } else {
+            $response['code']    = 2;
+            $response['message'] = array_values($student->firstErrors)[0];
+            $response['data']    = $student->firstErrors;
+        }
+        $this->response(200, $response);
+    }
+    /**
+     * @api              {post} /student/get 3. Lấy thông tin học sinh
+     * @apiGroup         Student
+     * @apiVersion       1.0.0
+     *
+     * @apiSampleRequest /api/student/get
+     * @apiParam {number} id Mã học sinh
+     *
+     * @apiSuccess {number} code Mã kết quả trả về
+     * @apiSuccess {string} message Nội dung kết quả trả về
+     * @apiSuccess {Object[]} data Mảng chứa đối tượng học sinh
+     * @apiSuccess {number} data.id Khóa chính
+     * @apiSuccess {string} data.name Tên học sinh
+     *  @apiSuccess {string} data.email Email
+     * @apiSuccess {string} data.phone Số điện thoại
+     *  @apiSuccess {number} data.birthday Ngày sinh
+     */
+    public function actionGet()
+    {
+        $id          = $this->getBodyValue('id', true);
+        $response['code'] = 0;
+        $student=Student::findOne($id);
+        if ($student!=null) {
+            $data = $student->attributes;
+            $response['data']   = $data;
+        } else {
+            $response['code']    = 2;
+            $response['message'] = array_values($student->firstErrors)[0];
+            $response['data']    = $student->firstErrors;
+        }
+        $this->response(200, $response);
+    }
 
-
+    /**
+     * @api              {post} /student/delete 5. Xóa học sinh
+     * @apiGroup         Student
+     * @apiVersion       1.0.0
+     *
+     * @apiSampleRequest /api/student/delete
+     * @apiParam {number} id Mã học sinh
+     *
+     * @apiSuccess {number} code Mã kết quả trả về
+     * @apiSuccess {string} message Nội dung kết quả trả về
+     */
+    public function actionDelete()
+    {
+        $id          = $this->getBodyValue('id', true);
+        $response['code'] = 0;
+        $student=Student::findOne($id);
+        if ($student->delete()) {
+            $response['code'] = 0;
+        } else {
+            $response['code']    = 2;
+            $response['message'] = array_values($student->firstErrors)[0];
+            $response['data']    = $student->firstErrors;
+        }
+        $this->response(200, $response);
+    }
 }
